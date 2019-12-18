@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercise 5</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    console.log("Exercise 5");
+    const getBatteryLevel = function () {
+        return navigator.getBattery();
+    }
+
+    // const getBatteryLevel = function () {
+    //     return navigator.getBattery().then(function (battery) {
+    //         // console.log("1 Battery level: ", (battery.level * 100));
+    //         return battery
+    //     })
+    // }
+
+    const getMovies = function () {
+        return fetch("https://gist.githubusercontent.com/pankaj28843/08f397fcea7c760a99206bcb0ae8d0a4/raw/02d8bc9ec9a73e463b13c44df77a87255def5ab9/movies.json")
+        .then(function (response) {
+            return response.json()
+        }).catch(function (err) {
+            throw err;  
+        })
+    }
+    // const getMovies = function () {
+    //     return new Promise(function (resolve, reject) {
+    //         fetch("https://gist.githubusercontent.com/pankaj28843/08f397fcea7c760a99206bcb0ae8d0a4/raw/02d8bc9ec9a73e463b13c44df77a87255def5ab9/movies.json")
+    //             .then(function (response) {
+    //                 resolve(response.json());
+    //             }).catch(function (err) {
+    //                 reject(err)
+    //             })
+    //     })
+    // }
+
+    Promise.all([getBatteryLevel(), getMovies()]).then(function (responses) {
+        const battery = response[0];
+        console.log("2 Battery level: ", (battery.level * 100));
+        console.log(responses[1]);
+    }).catch(function (err) {
+        console.log(err);
+    })
+</script>
+
+</html>

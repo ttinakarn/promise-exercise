@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercise 4</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    console.log("Exercise 4");
+    const getMovies = function () {
+        return new Promise(function (resolve, reject) {
+            fetch("https://gist.githubusercontent.com/pankaj28843/08f397fcea7c760a99206bcb0ae8d0a4/raw/02d8bc9ec9a73e463b13c44df77a87255def5ab9/movies.json")
+                .then(function (response) {
+                    resolve(response.json());
+                }).catch(function (err) {
+                    reject(err)
+                })
+        })
+    }
+
+    navigator.getBattery().then(function (battery) {
+        console.log("Battery level: ", (battery.level * 100));
+        getMovies().then(function (movies) {
+            console.log(movies);
+        })
+    })
+
+
+</script>
+
+</html>
