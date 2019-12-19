@@ -31,13 +31,43 @@
     let completePromises = 0;
 
     for (var i = 0; i < promises.length; i++) {
-        promises[i].then(function (response) {
-            result.push(response)
+        console.log(i);
+
+        function saveResultToIndex(index) {
+            return function(response) {
+                console.log(index)
+                // result.push(response)
+                console.log(`index: ${index}`);
+                result[index] = response;
+                completePromises += 1;
+            }
+        }
+
+        promises[i].then((ii => response => {
+            console.log(ii)
+            // result.push(response)
+            console.log(`ii: ${ii}`);
+            result[ii] = response;
             completePromises += 1;
-        }).then(function(){
+        })(i))
+
+        // promises[i].then(saveResultToIndex(i))
+        
+        // promises[i].then(function (response) {
+        //     // result.push(response)
+        //     console.log(`i: ${i}`);
+        //     result[i] = response;
+        //     completePromises += 1;
+        // })
+        .then(function () {
             if (completePromises == promises.length) {
-                const battery = result[0];
-                const movies = result[1];
+
+                const battery = result[1];
+                const movies = result[0];
+
+                // console.log(battery);
+                // console.log(movies);
+
                 console.log("Battery level: ", (battery.level * 100));
                 console.log(movies);
             }
