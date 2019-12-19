@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exercise 6</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    console.log("Exercise 6");
+
+    const getBatteryLevel = function () {
+        return navigator.getBattery();
+    }
+
+    const getMovies = function () {
+        return fetch("https://gist.githubusercontent.com/pankaj28843/08f397fcea7c760a99206bcb0ae8d0a4/raw/02d8bc9ec9a73e463b13c44df77a87255def5ab9/movies.json").then(function (response) {
+            return response.json();
+        }).catch(function (err) {
+            throw err;
+        })
+    }
+
+    const promises = [getMovies(), getBatteryLevel()];
+    const result = [];
+    let completePromises = 0;
+
+    for (var i = 0; i < promises.length; i++) {
+        promises[i].then(function (response) {
+            result.push(response)
+            completePromises += 1;
+        }).then(function(){
+            if (completePromises == promises.length) {
+                const battery = result[0];
+                const movies = result[1];
+                console.log("Battery level: ", (battery.level * 100));
+                console.log(movies);
+            }
+        })
+    }
+</script>
+
+</html>
